@@ -1,6 +1,6 @@
 package ru.pft.addressbook;
 
-public class AddressData {
+public class ContactData {
   private final String firstName;
   private final String lastName;
   private final String nickName;
@@ -8,7 +8,7 @@ public class AddressData {
   private final String mobPhone;
   private final String email;
 
-  public AddressData(String firstName, String lastName, String nickName, String homePhone, String mobPhone, String email) {
+  public ContactData(String firstName, String lastName, String nickName, String homePhone, String mobPhone, String email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.nickName = nickName;
