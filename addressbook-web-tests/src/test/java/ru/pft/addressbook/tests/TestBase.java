@@ -10,7 +10,7 @@ import ru.pft.addressbook.appmager.ApplicationManager;
  */
 public class TestBase {
 
-  protected final ApplicationManager app = new ApplicationManager(BrowserType.IE);
+  protected final ApplicationManager app = new ApplicationManager(BrowserType.EDGE);
 
   @BeforeMethod
   public void setUp() throws Exception {
