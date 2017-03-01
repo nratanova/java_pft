@@ -20,5 +20,8 @@ public class GroupDelTests extends TestBase {
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size() - 1); //Проверка, что после удаления группы кол-во групп уменьшилось на 1
+
+        before.remove(before.size()-1);
+        Assert.assertEquals(after,before);
     }
 }
