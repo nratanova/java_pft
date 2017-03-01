@@ -18,7 +18,7 @@ public class ContactDelTests extends TestBase {
               null, "888888888", "qwert3@gmail.com", "Test"), true);
     }
     int before = app.getContactHelper().getContactCount(); //Получение кол-ва контактов до операции
-    app.getContactHelper().selecContact();
+    app.getContactHelper().selecContact(before-1);
     app.getContactHelper().deleteContact();
     app.getContactHelper().switchYes();
     app.getNavigationHelper().gotoHomePage();
