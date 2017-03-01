@@ -6,14 +6,16 @@ import ru.pft.addressbook.appmager.NavigationHelper;
 import ru.pft.addressbook.model.ContactData;
 import ru.pft.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreation() {
     app.getNavigationHelper().gotoHomePage();
-    int before = app.getContactHelper().getContactCount(); //Получение кол-ва контактов до операции
+    List<ContactData> before = app.getContactHelper().getContactList();
     app.getContactHelper().createContact(new ContactData("Nat", "Rat", null,
             null, "888888888", "qwert3@gmail.com", "Test"), true);
-    int after = app.getContactHelper().getContactCount(); //Получение кол-ва контактов после операции
-    Assert.assertEquals(after, before+1); //Проверка, что кол-во контактов увеличилось на 1
+    List<ContactData> after = app.getContactHelper().getContactList();
+    Assert.assertEquals(after.size(), before.size()+1); //Проверка, что кол-во контактов увеличилось на 1
   }
 }
