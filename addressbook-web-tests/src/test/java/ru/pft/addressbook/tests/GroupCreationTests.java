@@ -25,9 +25,11 @@ public class GroupCreationTests extends TestBase {
     котрая находит максимальный элемент сравнивая объекты типы GroupData по идентификатору
     на выходе будет группа с максимальным идентификатором, достаем это id - get().getId()*/
 
-    group.setId(after.stream().max((Comparator<GroupData>) (o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
     before.add(group);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));//Сравнение множеств групп
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId()); //функция сравнения объектов по Id
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before,after);//Сравнение списков групп
   }
 
 }

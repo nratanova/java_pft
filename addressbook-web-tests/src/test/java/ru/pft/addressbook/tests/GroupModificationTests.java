@@ -33,7 +33,7 @@ public class GroupModificationTests extends TestBase {
     //Проверка после модификации контакта
     before.remove(before.size() - 1); //Удаление старого объекта из первонач.списка
     before.add(group); //Добавление нового объекта
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId()); //функция сравнения объектов по Id
     before.sort(byId); //сортировка по Id
     after.sort(byId); //сортировка по Id
     Assert.assertEquals(before,after); //Сравнение отсортированных списков
