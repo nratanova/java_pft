@@ -32,7 +32,7 @@ public class GroupModificationTests extends TestBase {
     //Проверка после модификации контакта
     before.remove(before.size() - 1); //Удаление старого объекта из первонач.списка
     before.add(group); //Добавление нового объекта
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));//Сравнение множеств контактов после модификации
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));//Сравнение множеств групп
 
 
   }
