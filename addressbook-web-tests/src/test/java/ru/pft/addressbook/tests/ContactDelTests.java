@@ -1,6 +1,7 @@
 package ru.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.pft.addressbook.model.ContactData;
 
@@ -11,23 +12,26 @@ import java.util.List;
  */
 public class ContactDelTests extends TestBase {
 
-  @Test (enabled = false)
-  public void testContactDel() {
+  @BeforeMethod
+  public void ensurePreconditions() {
     app.goTo().gotoHomePage();
-    if (! app.getContactHelper().isThereAContact()) {
-      app.getContactHelper().createContact(new ContactData("Nat", "Rat", null,
+    if (app.contact().list().size() == 0) {
+      app.contact().create(new ContactData("Nat", "Rat", null,
               null, "888888888", "qwert3@gmail.com", "Test"), true);
     }
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selecContact(before.size()-1);
-    app.getContactHelper().deleteContact();
-    app.getContactHelper().switchYes();
-    app.goTo().gotoHomePage();
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size()-1); //Проверка, что кол-во контактов уменьшилось на 1
+  }
+
+  @Test
+  public void testContactDel() {
+    List<ContactData> before = app.contact().list();
+    int index = before.size() - 1;
+    app.contact().delete(index);
+    List<ContactData> after = app.contact().list();
+    Assert.assertEquals(after.size(), before.size() - 1); //Проверка, что кол-во контактов уменьшилось на 1
 
     //Сравнение списков до удаления и после
-    before.remove(before.size()-1); //Удаляем перед сравнением тот контакт, который подлежит удалению
+    before.remove(index); //Удаляем перед сравнением тот контакт, который подлежит удалению
     Assert.assertEquals(before, after);
   }
+
 }

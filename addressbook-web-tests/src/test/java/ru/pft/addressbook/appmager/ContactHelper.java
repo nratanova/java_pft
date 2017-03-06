@@ -10,6 +10,8 @@ import ru.pft.addressbook.model.ContactData;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.pft.addressbook.tests.TestBase.app;
+
 /**
  * Created by Наташа on 02.02.2017.
  */
@@ -68,11 +70,26 @@ public class ContactHelper extends HelperBase {
     click(By.linkText("add new"));
   }
 
-  public void createContact(ContactData contact, boolean creation) {
+  public void create(ContactData contact, boolean creation) {
     gotoNewContactPage();
     fillContactForm(contact, creation);
     submitContactCreation();
     returnHomePage();
+  }
+
+  public void modify(ContactData contact, int index) {
+    selecContact(index);
+    initContactModification(index);
+    fillContactForm((contact), false);
+    submitContactModification();
+    returnHomePage();
+  }
+
+  public void delete(int index) {
+    selecContact(index);
+    deleteContact();
+    switchYes();
+    app.goTo().gotoHomePage();
   }
 
   public boolean isThereAContact() {
@@ -84,7 +101,7 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  public List<ContactData> getContactList() {
+  public List<ContactData> list() {
     List<ContactData> contacts = new ArrayList<ContactData>();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
