@@ -2,16 +2,12 @@ package ru.pft.addressbook.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import ru.pft.addressbook.appmager.NavigationHelper;
 import ru.pft.addressbook.model.ContactData;
-import ru.pft.addressbook.model.GroupData;
-
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
-  @Test
+  @Test (enabled = false)
   public void testContactCreation() {
     app.getNavigationHelper().gotoHomePage();
     List<ContactData> before = app.getContactHelper().getContactList();
