@@ -87,8 +87,7 @@ public class GroupHelper extends HelperBase {
     for (WebElement element:elements) {
       String name = element.getText(); //Вытащить наименование группы
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //вытащить id чекбокса
-      GroupData group = new GroupData(id, name, null, null);
-      groups.add(group); //Добавить найденную группу в список групп
+      groups.add(new GroupData().withId(id).withName(name)); //Добавить найденную группу в список групп
     }
     return groups;
   }
