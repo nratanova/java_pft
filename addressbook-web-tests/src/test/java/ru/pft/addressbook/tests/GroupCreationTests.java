@@ -4,31 +4,30 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.pft.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
     app.goTo().groupPage();
-    List<GroupData> before = app.group().list();
+    Set<GroupData> before = app.group().all();
     GroupData group = new GroupData().withName("Group2");//Создается объект с именем Group2
     app.group().create(group);
-    List<GroupData> after = app.group().list();
+    Set<GroupData> after = app.group().all();
     Assert.assertEquals(after.size(), before.size() + 1); //Проверка, что после создания группы кол-во групп увелисилось на 1
 
-//Вычисление максимальногоо ID (ID новой группы)
+    //Присвоение группе идентификатора
+    //Берем коллекцию объектов, превращаем в поток(stream), преобразуем поток объектов в поток
+    // идентификаторов - mapToInt, где на вход подается анонимная функция, которая преобразует объект в число,
+    //после чего находится максимальное значение (max()) и результат преобразуется в обычное целое число (getAsInt())
+    group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
 
-    /*Превращение списка в поток stream(), по потоку пробегается лямбда функция - сравниватель,
-    котрая находит максимальный элемент сравнивая объекты типы GroupData по идентификатору
-    на выходе будет группа с максимальным идентификатором, достаем это id - get().getId()*/
-
+    //Модификация множества "до"
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId()); //функция сравнения объектов по Id
-    before.sort(byId);
-    after.sort(byId);
-    Assert.assertEquals(before,after);//Сравнение списков групп
+
+    //Сравнение множеств
+    Assert.assertEquals(before,after);
   }
 
 }
