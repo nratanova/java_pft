@@ -16,8 +16,8 @@ public class ContactDelTests extends TestBase {
   public void ensurePreconditions() {
     app.goTo().gotoHomePage();
     if (app.contact().list().size() == 0) {
-      app.contact().create(new ContactData("Nat", "Rat", null,
-              null, "888888888", "qwert3@gmail.com", "Test"), true);
+      app.contact().create(new ContactData().withFirstName("Nat").withLastName("Rat").
+              withMobPhone("888888888").withEmail("qwert3@gmail.com").withGroup("Test"), true);
     }
   }
 
@@ -33,5 +33,4 @@ public class ContactDelTests extends TestBase {
     before.remove(index); //Удаляем перед сравнением тот контакт, который подлежит удалению
     Assert.assertEquals(before, after);
   }
-
 }
