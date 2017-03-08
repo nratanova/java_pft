@@ -26,13 +26,11 @@ public class GroupModificationTests extends TestBase {
   public void testGroupModification() {
     Groups before = app.group().all();
     GroupData modifiedGroup = before.iterator().next(); //Вернется первый попавшийся элемент множества
-    //При модификации указываем новые имя, header, footer + старый ID (перед модификацией)
     GroupData group = new GroupData().withId(modifiedGroup.getId()).
             withName("Test").withHeader("Test2").withFooter("Test3");
     app.group().modify(group);
+    assertThat(app.group().count(), equalTo(before.size()));//Проверка кол-ва в списках
     Groups after = app.group().all();
-    assertEquals(after.size(), before.size()); //Проверка, что после модификации группы кол-во групп не изменилось
-
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
 
 

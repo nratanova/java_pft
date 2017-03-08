@@ -15,11 +15,23 @@ public class GroupCreationTests extends TestBase {
     Groups before = app.group().all();
     GroupData group = new GroupData().withName("Group2");//Создается объект с именем Group2
     app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size() + 1)); //Хэширование, предварительная проверка,
+    // при помощи более быстрого способа
     Groups after = app.group().all();
-    assertThat(after.size(), equalTo(before.size() + 1)); //Проверка, что после создания группы кол-во групп увелисилось на 1
     assertThat(after, equalTo
             (before.withAdded(group.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     //CoreMatchers.equalTo - проверялка, параметр - то, что надо проверить
   }
 
+  @Test
+  //Негативный тест, проверяющий, что группа с таким названием не создается
+  public void testBadGroupCreation() {
+    app.goTo().groupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("Group2'");//Создается объект с именем Group2
+    app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size())); //Проверка, что после создания группы кол-во групп увелисилось на 1
+    Groups after = app.group().all();
+    assertThat(after, equalTo(before));
+  }
 }

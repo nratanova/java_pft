@@ -37,8 +37,8 @@ public class ContactModificationTests extends TestBase {
             withLastName("Testov").withNickName("Testik").withHomePhone("85555555555").
             withMobPhone("79051111111").withEmail("qwerty3@gmail.com");
     app.contact().modify(contact);
+    assertEquals(app.contact().count(), before.size()); //Хэширование
     Contacts after = app.contact().all();
-    assertEquals(after.size(), before.size()); //Проверка, что кол-во контактов не изменилось
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 

@@ -33,9 +33,8 @@ public class ContactDelTests extends TestBase {
     Contacts before = app.contact().all();
     ContactData deletedContact = before.iterator().next(); //Первый попавшийся из списка
     app.contact().delete(deletedContact);
+    assertEquals(app.contact().count(), before.size() - 1); //Хэширование
     Contacts after = app.contact().all();
-    assertEquals(after.size(), before.size() - 1); //Проверка, что кол-во контактов уменьшилось на 1
-
     assertThat(after, equalTo(before.without(deletedContact)));
   }
 }
