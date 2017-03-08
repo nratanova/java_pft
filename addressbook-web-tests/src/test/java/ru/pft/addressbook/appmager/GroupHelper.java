@@ -6,9 +6,8 @@ import org.openqa.selenium.WebElement;
 import ru.pft.addressbook.model.GroupData;
 import ru.pft.addressbook.model.Groups;
 
-import java.util.HashSet;
+import java.security.acl.Group;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Наташа on 02.02.2017.
@@ -58,6 +57,7 @@ public class GroupHelper extends HelperBase {
     initGroupCreation();
     fillGroupForm(group);
     submitGroupCreation();
+    groupCach = null; //Очистить кэш
     returnToGroupPage();
   }
 
@@ -66,12 +66,14 @@ public class GroupHelper extends HelperBase {
     initGroupModification();
     fillGroupForm(group);
     submitGroupModification();
+    groupCach = null; //Очистить кэш
     returnToGroupPage();
   }
 
   public void delete(GroupData deleteGroup) {
     selectGroupById(deleteGroup.getId());
     deleteSelectedGroups();
+    groupCach = null; //Очистить кэш
     returnToGroupPage();
   }
 
@@ -83,16 +85,23 @@ public class GroupHelper extends HelperBase {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  private Groups groupCach = null;
+
   //Вспомогательный метод, который сразу возвращает множество, а не список
   public Groups all() {
-    Groups groups = new Groups();
+
+    if (groupCach != null) {
+      return new Groups(groupCach);//вернуть копию кэша
+    }
+
+    Groups groupCach = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements) {
       String name = element.getText(); //Вытащить наименование группы
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value")); //вытащить id чекбокса
-      groups.add(new GroupData().withId(id).withName(name)); //Добавить найденную группу в список групп
+      groupCach.add(new GroupData().withId(id).withName(name)); //Добавить найденную группу в список групп
     }
-    return groups;
+    return new Groups(groupCach);//Возвращаем копию кэша
   }
 
 }
