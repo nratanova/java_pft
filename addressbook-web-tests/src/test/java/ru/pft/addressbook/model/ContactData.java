@@ -10,6 +10,12 @@ public class ContactData {
   private String mobPhone;
   private String email;
   private String group;
+  private String workPhone;
+
+  public ContactData withWorkPhone(String workPhone) {
+    this.workPhone = workPhone;
+    return this;
+  }
 
   public ContactData withId(int id) {
     this.id = id;
