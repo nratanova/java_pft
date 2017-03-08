@@ -1,11 +1,13 @@
 package ru.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.pft.addressbook.model.GroupData;
+import ru.pft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Наташа on 03.02.2017.
@@ -22,19 +24,16 @@ public class GroupModificationTests extends TestBase {
 
   @Test
   public void testGroupModification() {
-    Set<GroupData> before = app.group().all();
+    Groups before = app.group().all();
     GroupData modifiedGroup = before.iterator().next(); //Вернется первый попавшийся элемент множества
     //При модификации указываем новые имя, header, footer + старый ID (перед модификацией)
     GroupData group = new GroupData().withId(modifiedGroup.getId()).
             withName("Test").withHeader("Test2").withFooter("Test3");
     app.group().modify(group);
-    Set<GroupData> after = app.group().all();
-    Assert.assertEquals(after.size(), before.size()); //Проверка, что после модификации группы кол-во групп не изменилось
+    Groups after = app.group().all();
+    assertEquals(after.size(), before.size()); //Проверка, что после модификации группы кол-во групп не изменилось
 
-    //Проверка после модификации контакта
-    before.remove(modifiedGroup); //Удаление старого объекта из первонач.списка
-    before.add(group); //Добавление нового объекта
-    Assert.assertEquals(before,after); //Сравнение множеств
+    assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
 
 
   }
