@@ -35,6 +35,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("nickname"), contactData.getNickName());
     type(By.name("home"), contactData.getHomePhone());
     type(By.name("mobile"), contactData.getMobPhone());
+    type(By.name("work"), contactData.getWorkPhone());
     type(By.name("email"), contactData.getEmail());
     if (creation) {
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -130,10 +131,10 @@ public class ContactHelper extends HelperBase {
       String firstName = element.findElement(By.xpath(".//td[3]")).getText();
       String lastName = element.findElement(By.xpath(".//td[2]")).getText();
       //получаем строку со всеми телефонами и разрезаем
-      String[] phones = element.findElement(By.xpath(".//td[6]")).getText().split("\n");
+      String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCach.add(new ContactData().withId(id).withFirstName(firstName).
-              withLastName(lastName).withHomePhone(phones[0]).withMobPhone(phones[1]).withWorkPhone(phones[2]));
+              withLastName(lastName).withAllPhones(allPhones));
     }
     return new Contacts(contactCach);
   }

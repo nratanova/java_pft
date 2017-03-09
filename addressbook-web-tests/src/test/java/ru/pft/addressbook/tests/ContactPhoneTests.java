@@ -1,7 +1,5 @@
 package ru.pft.addressbook.tests;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
 import org.testng.annotations.Test;
 import ru.pft.addressbook.model.ContactData;
 
@@ -19,10 +17,20 @@ public class ContactPhoneTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
-    assertThat(contact.getHomePhone(), equalTo(cleaned(contactInfoFromEditForm.getHomePhone())));
+    assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
     assertThat(contact.getMobPhone(), equalTo(cleaned(contactInfoFromEditForm.getMobPhone())));
     assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getWorkPhone())));
   }
+
+  //Склеивание
+  private String mergePhones(ContactData contact) {
+    String result = "";
+    if (contact.getHomePhone() != null){
+      result = result + contact.getHomePhone();
+    }
+    return result;
+  }
+
   //Удаление лишних символов
   public String cleaned (String phone) {
     return phone.replaceAll("\\s","").replaceAll("[-()]","");
