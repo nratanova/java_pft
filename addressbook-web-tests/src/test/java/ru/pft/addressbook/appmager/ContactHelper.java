@@ -124,15 +124,16 @@ public class ContactHelper extends HelperBase {
     if (contactCach != null) {
       return new Contacts(contactCach);
     }
-
     Contacts contactCach = new Contacts();
     List<WebElement> elements = wd.findElements(By.xpath("//tr[@name='entry']"));
     for (WebElement element : elements) {
       String firstName = element.findElement(By.xpath(".//td[3]")).getText();
       String lastName = element.findElement(By.xpath(".//td[2]")).getText();
+      //получаем строку со всеми телефонами и разрезаем
+      String[] phones = element.findElement(By.xpath(".//td[6]")).getText().split("\n");
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCach.add(new ContactData().withId(id).withFirstName(firstName).
-              withLastName(lastName));
+              withLastName(lastName).withHomePhone(phones[0]).withMobPhone(phones[1]).withWorkPhone(phones[2]));
     }
     return new Contacts(contactCach);
   }

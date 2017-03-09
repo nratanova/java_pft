@@ -88,6 +88,10 @@ public class ContactData {
     return group;
   }
 
+  public String getWorkPhone() {
+    return workPhone;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
