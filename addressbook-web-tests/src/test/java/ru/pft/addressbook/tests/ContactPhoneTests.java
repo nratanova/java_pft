@@ -3,6 +3,9 @@ package ru.pft.addressbook.tests;
 import org.testng.annotations.Test;
 import ru.pft.addressbook.model.ContactData;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -18,21 +21,19 @@ public class ContactPhoneTests extends TestBase {
     ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
-    assertThat(contact.getMobPhone(), equalTo(cleaned(contactInfoFromEditForm.getMobPhone())));
-    assertThat(contact.getWorkPhone(), equalTo(cleaned(contactInfoFromEditForm.getWorkPhone())));
   }
 
-  //Склеивание
+  //Склеивание методом обратных проверок
   private String mergePhones(ContactData contact) {
-    String result = "";
-    if (contact.getHomePhone() != null){
-      result = result + contact.getHomePhone();
-    }
-    return result;
+     return Arrays.asList(contact.getHomePhone(), contact.getMobPhone(), contact.getWorkPhone())
+            .stream().filter((s) -> ! s.equals("")) //Отфильтровываем пустые строки
+             .map(ContactPhoneTests::cleaned) //Ко всем тел. применяем функцию очистки
+             .collect(Collectors.joining("\n")); //склеиваем полученные тел. в строчку и сравниваем с тем,
+    // что на главной странице
   }
 
   //Удаление лишних символов
-  public String cleaned (String phone) {
+  public static String cleaned (String phone) {
     return phone.replaceAll("\\s","").replaceAll("[-()]","");
   }
 }
