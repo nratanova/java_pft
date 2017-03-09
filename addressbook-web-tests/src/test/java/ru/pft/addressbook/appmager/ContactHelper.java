@@ -133,9 +133,10 @@ public class ContactHelper extends HelperBase {
       //получаем строку со всеми телефонами и разрезаем
       String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
       String address = element.findElement(By.xpath(".//td[4]")).getText();
+      String allEmails = element.findElement(By.xpath(".//td[5]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCach.add(new ContactData().withId(id).withFirstName(firstName).
-              withLastName(lastName).withAllPhones(allPhones).withAddress(address));
+              withLastName(lastName).withAllPhones(allPhones).withAddress(address).withAllEmails(allEmails));
     }
     return new Contacts(contactCach);
   }
@@ -148,10 +149,13 @@ public class ContactHelper extends HelperBase {
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
     String address = wd.findElement(By.name("address")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
     wd.navigate().back();
     return new ContactData().withId(contact.getId()).withFirstName(firstname)
             .withLastName(lastname).withHomePhone(home).withMobPhone(mobile).withWorkPhone(work)
-            .withAddress(address);
+            .withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
   }
 }
 
