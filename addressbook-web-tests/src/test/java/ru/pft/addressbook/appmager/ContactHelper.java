@@ -132,9 +132,10 @@ public class ContactHelper extends HelperBase {
       String lastName = element.findElement(By.xpath(".//td[2]")).getText();
       //получаем строку со всеми телефонами и разрезаем
       String allPhones = element.findElement(By.xpath(".//td[6]")).getText();
+      String address = element.findElement(By.xpath(".//td[4]")).getText();
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
       contactCach.add(new ContactData().withId(id).withFirstName(firstName).
-              withLastName(lastName).withAllPhones(allPhones));
+              withLastName(lastName).withAllPhones(allPhones).withAddress(address));
     }
     return new Contacts(contactCach);
   }
@@ -146,9 +147,11 @@ public class ContactHelper extends HelperBase {
     String home = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
     String work = wd.findElement(By.name("work")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
     wd.navigate().back();
-    return new ContactData().withId(contact.getId()).withFirstName(firstname).
-            withLastName(lastname).withHomePhone(home).withMobPhone(mobile).withWorkPhone(work);
+    return new ContactData().withId(contact.getId()).withFirstName(firstname)
+            .withLastName(lastname).withHomePhone(home).withMobPhone(mobile).withWorkPhone(work)
+            .withAddress(address);
   }
 }
 
