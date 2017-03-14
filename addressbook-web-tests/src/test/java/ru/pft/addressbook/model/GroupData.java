@@ -1,5 +1,6 @@
 package ru.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -8,11 +9,15 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 
 public class GroupData {
-  @XStreamOmitField //Игнорировать поле
-  private int id = Integer.MAX_VALUE;;
+  @XStreamOmitField //Игнорировать поле id для библиотеки XStream
+  private int id = Integer.MAX_VALUE;
+  @Expose //Пометка для json, какие поля не игнорировать
   private String name;
+  @Expose
   private String header;
+  @Expose
   private String footer;
+
 
   public GroupData withId(int id) { //сеттер для ID новой группы
     this.id = id;
