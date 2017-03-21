@@ -4,23 +4,20 @@
     "lastName": "Rat 0",
     "mobPhone": "89059099090",
     "email": "Nat0@mail.ru",
-    "group": "Test",
-    "photo": {}
+    "group": "Test"
   },
   {
     "firstName": "Nat 1",
     "lastName": "Rat 1",
     "mobPhone": "89059099091",
     "email": "Nat1@mail.ru",
-    "group": "Test",
-    "photo": {}
+    "group": "Test"
   },
   {
     "firstName": "Nat 2",
     "lastName": "Rat 2",
     "mobPhone": "89059099092",
     "email": "Nat2@mail.ru",
-    "group": "Test",
-    "photo": {}
+    "group": "Test"
   }
 ]
