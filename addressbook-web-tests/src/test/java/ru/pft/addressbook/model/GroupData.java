@@ -3,19 +3,34 @@ package ru.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @XStreamAlias("group")
-
-
-
+@Entity
+@Table(name = "group_list")
 public class GroupData {
   @XStreamOmitField //Игнорировать поле id для библиотеки XStream
+  @Id
+  @Column (name = "group_id")
   private int id = Integer.MAX_VALUE;
+
   @Expose //Пометка для json, какие поля не игнорировать
+  @Column (name = "group_name")
   private String name;
+
   @Expose
+  @Column (name = "group_header")
+  @Type(type = "text")
   private String header;
+
   @Expose
+  @Column (name = "group_footer")
+  @Type(type = "text")
   private String footer;
 
 
