@@ -2,7 +2,9 @@ package ru.pft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,8 +22,12 @@ this.delegate = new HashSet<ContactData>(contacts.delegate);
     this.delegate = new HashSet<ContactData>();
   }
 
+    public Contacts(Collection<ContactData> contacts) {
+      this.delegate = new HashSet<ContactData>(contacts);
+    }
 
-  @Override
+
+    @Override
   protected Set delegate() {
     return delegate;
   }

@@ -18,9 +18,9 @@ public class GroupDelTests extends TestBase {
 
     @BeforeMethod
     public void ensurePrecondition() {
-        app.goTo().groupPage();
-        if (app.group().all().size() == 0) {
-            app.group().create(new GroupData().withName("Test1"));
+        if(app.db().groups().size()==0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("Test"));
         }
     }
 
@@ -28,6 +28,7 @@ public class GroupDelTests extends TestBase {
     public void testGroupDel() {
         Groups before = app.db().groups();
         GroupData deleteGroup = before.iterator().next(); //Вернется первый попавшийся элемент множества
+        app.goTo().groupPage();
         app.group().delete(deleteGroup);
         assertThat(app.group().count(), equalTo(before.size() - 1));//Проверка кол-ва в списках
         Groups after = app.db().groups();
