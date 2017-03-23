@@ -2,8 +2,7 @@ package ru.pft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Наташа on 08.03.2017.
@@ -20,7 +19,11 @@ public class Groups extends ForwardingSet<GroupData> {
     this.delegate = new HashSet<GroupData>();
   }
 
-  @Override
+    public Groups(Collection<GroupData> groups) {
+      this.delegate = new HashSet<GroupData>(groups);
+    }
+
+    @Override
   protected Set<GroupData> delegate() {
     return delegate;
   }
