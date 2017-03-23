@@ -64,11 +64,6 @@ public class ContactCreationTests extends TestBase {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName(groupName));
         }
-
-        if (!app.db().groups().equals("Test")) {
-            app.goTo().groupPage();
-            app.group().create(new GroupData().withName(groupName));
-        }
     }
 
     @Test(dataProvider = "validContactsJson")
