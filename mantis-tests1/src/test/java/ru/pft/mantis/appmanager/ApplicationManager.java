@@ -1,5 +1,6 @@
 package ru.pft.mantis.appmanager;
 
+import org.apache.commons.exec.ExecuteWatchdog;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -18,42 +19,57 @@ import java.util.concurrent.TimeUnit;
  */
 public class ApplicationManager {
 
-  private final Properties properties;
-  WebDriver wd;
+    private final Properties properties;
+    private WebDriver wd;
 
-  private String browser;
+    private String browser;
+    private RegistrationHelper registrationHelper;
 
-  public ApplicationManager(String browser) {
-    this.browser = browser;
-    properties = new Properties();
-  }
-
-  public void init() throws IOException {
-    String target = System.getProperty("target", "local");
-    properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
-    if (browser.equals(BrowserType.FIREFOX)) {
-      wd = new FirefoxDriver();
-    } else if (browser.equals(BrowserType.CHROME)) {
-      wd = new ChromeDriver();
-    } else if (browser.equals(BrowserType.IE)) {
-      wd = new InternetExplorerDriver();
-    } else if (browser.equals(BrowserType.EDGE)) {
-      wd = new EdgeDriver();
+    public ApplicationManager(String browser) {
+        this.browser = browser;
+        properties = new Properties();
     }
-    wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    wd.get(properties.getProperty("web.baseUrl"));
-  }
 
-  public void stop() {
-    wd.quit();
-  }
+    public void init() throws IOException {
+        String target = System.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+    }
 
-  public HttpSession newSession() {
-    return new HttpSession(this);
-  }
+    public void stop() {
+        if(wd != null) {
+            wd.quit();
+        }
+    }
 
-  public String getProperty(String key) {
-    return properties.getProperty(key);
-  }
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public RegistrationHelper registration() {
+        if(registrationHelper == null) {
+            registrationHelper = new RegistrationHelper(this);
+        }
+        return registrationHelper;
+    }
+
+    public WebDriver getDriver() {
+        if (wd == null) { //Если драйвер не проинициализирован
+            if (browser.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browser.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(BrowserType.IE)) {
+                wd = new InternetExplorerDriver();
+            } else if (browser.equals(BrowserType.EDGE)) {
+                wd = new EdgeDriver();
+            }
+            wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            wd.get(properties.getProperty("web.baseUrl"));
+        }
+        return wd;
+    }
 }
