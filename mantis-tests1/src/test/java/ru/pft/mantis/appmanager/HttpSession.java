@@ -69,5 +69,4 @@ public class HttpSession {
         //Проверка что в тескте стр есть строчка с именем пользователя
         return body.contains(String.format("<a href=\"/mantisbt-2.2.1/account_page.php\">%s</a>", username));
     }
-
 }

@@ -27,5 +27,4 @@ public class TestBase {
     app.ftp().restore("config_inc.php.back", "config_inc.php");
     app.stop();
   }
-
 }

@@ -1,12 +1,14 @@
 package ru.pft.mantis.appmanager;
 
 import org.apache.commons.exec.ExecuteWatchdog;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import sun.rmi.runtime.Log;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,18 +16,22 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import static jdk.nashorn.internal.objects.NativeJava.type;
+
 /**
  * Created by Наташа on 02.02.2017.
  */
 public class ApplicationManager {
 
     private final Properties properties;
-    private WebDriver wd;
+    public WebDriver wd;
 
     private String browser;
     private RegistrationHelper registrationHelper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
+    private LoginHelper loginHelper;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -88,5 +94,16 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public LoginHelper login() {
+        if(loginHelper == null) {
+            loginHelper = new LoginHelper(this);
+        }
+        return loginHelper;
+    }
+
+    public DbHelper db () {
+        return dbHelper;
     }
 }
