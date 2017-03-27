@@ -22,7 +22,7 @@ public class LoginHelper extends HelperBase {
     public void resetUserPassword(int id) { //Для теста без параметра
         click(By.cssSelector("a[href='/mantisbt-2.2.1/manage_overview_page.php']"));
         click(By.cssSelector("a[href='/mantisbt-2.2.1/manage_user_page.php']"));
-       // click(By.cssSelector("a[href='manage_user_edit_page.php?user_id=14']")); //для теста мой юзер
+        //click(By.cssSelector("a[href='manage_user_edit_page.php?user_id=14']")); //для теста мой юзер
         selecUserById(id);
         //click(By.cssSelector("input[value='Сбросить пароль']"));
         resetPass();
@@ -36,7 +36,7 @@ public class LoginHelper extends HelperBase {
     }
 
     private void selecUserById(int id) {
-        wd.findElement(By.cssSelector("a[href='manage_user_edit_page.php?user_id='" + id + "']")).click();
+        wd.findElement(By.cssSelector("a[href='manage_user_edit_page.php?user_id=" + id + "']")).click();
     }
 
     private void resetPass() {

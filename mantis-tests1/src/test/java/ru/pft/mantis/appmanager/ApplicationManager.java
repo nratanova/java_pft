@@ -31,7 +31,7 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private LoginHelper loginHelper;
-    private DbHelper dbHelper;
+    private DbHelper dbHelper = null;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -104,6 +104,9 @@ public class ApplicationManager {
     }
 
     public DbHelper db () {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper();
+        }
         return dbHelper;
     }
 }

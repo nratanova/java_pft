@@ -26,16 +26,15 @@ public class ChangePasswordTests extends TestBase {
 
     @Test
     public void testChangePassword() throws IOException, MessagingException, ClassNotFoundException {
-        app.login().login("administrator","root");
         Users users = app.db().users();
         UserData modifiedUser = users.iterator().next(); //Первый попавшийся из списка
+        int id = modifiedUser.getId();
         String username = modifiedUser.getUser();
-       // String username = "usertest";//для теста
         String email = modifiedUser.getEmail();
-        //String email = String.format("user@localhost.localdomain");//Для теста
-        String password = "password";//
-        app.login().resetUserPassword(modifiedUser.getId());
-        //app.login().resetUserPassword();//Для теста
+        String password = "password";
+
+        app.login().login("administrator","root");
+        app.login().resetUserPassword(id);
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.login().finish(confirmationLink,password);
